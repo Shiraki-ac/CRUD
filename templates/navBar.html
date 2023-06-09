@@ -1,0 +1,38 @@
+    <!--NavBar-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          
+        <a class="navbar-brand" href="#" style="margin-left: 3%;">
+              <img src="https://purepng.com/public/uploads/large/purepng.com-cat-cuteanimalscats-115205020723cicy.png" width="30" height="30" class="d-inline-block align-top" alt="">
+              Tareas
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="login.php">login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="register.php">Register</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+          <!-- Tab panes -->
+          <div class="tab-content">
+              <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
+              <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
+              <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
+              <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
+              <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+          </div>
+          
+          <script>
+              $('#navId a').click(e => {
+                  e.preventDefault();
+                  $(this).tab('show');
+              });
+          </script>
