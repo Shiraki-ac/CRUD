@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('formularioTarea').addEventListener('submit', crearTarea);
-  let tareas = []; // Array de tareas
+  let tareas = [];
+  let tareaEditando = -1; 
 
-  // CREATE TAREAS
   function crearTarea(event) {
     event.preventDefault();
     const titulo = document.getElementById('titulo').value;
@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Verificar si la tarea ya existe
-    const tareaExistente = tareas.find(tarea => tarea.titulo === titulo);
+    const tareaExistente = tareas.find((tarea, index) => {
+      return tarea.titulo === titulo && index !== tareaEditando;
+    });
+
     if (tareaExistente) {
       alert('La tarea ya existe. Por favor, ingrese un título diferente.');
       return;
@@ -27,7 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
       materia: materia
     };
 
-    tareas.push(tarea);
+    if (tareaEditando !== -1) {
+      tareas[tareaEditando] = tarea;
+      tareaEditando = -1; 
+    } else {
+
+      tareas.push(tarea);
+    }
+
     document.getElementById('formularioTarea').reset();
     actualizarListaTareas();
   }
@@ -59,13 +68,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function editarTarea(index) {
     const tarea = tareas[index];
+    tareaEditando = index;
+
     document.getElementById('titulo').value = tarea.titulo;
+    document.getElementById('materia').value = tarea.materia;
     document.getElementById('descripcion').value = tarea.descripcion;
 
-    // Eliminar la tarea actual del array
-    tareas.splice(index, 1);
+    const botonGuardar = document.createElement('button');
+    botonGuardar.setAttribute('type', 'button');
+    botonGuardar.classList.add('btn', 'btn-success');
+    botonGuardar.innerText = 'Guardar';
+    botonGuardar.addEventListener('click', crearTarea);
 
-    // Actualizar la lista de tareas
-    actualizarListaTareas();
+    const botonCancelar = document.createElement('button');
+    botonCancelar.setAttribute('type', 'button');
+    botonCancelar.classList.add('btn', 'btn-secondary');
+    botonCancelar.innerText = 'Cancelar';
+    botonCancelar.addEventListener('click', cancelarEdicion);
+
+    const divBotones = document.createElement('div');
+    divBotones.classList.add('btn-group');
+    divBotones.appendChild(botonGuardar);
+    divBotones.appendChild(botonCancelar);
+
+    const formulario = document.getElementById('formularioTarea');
+    formulario.appendChild(divBotones);
+  }
+
+  function cancelarEdicion() {
+    tareaEditando = -1;
+    document.getElementById('formularioTarea').reset();
+    const formulario = document.getElementById('formularioTarea');
+    formulario.removeChild(formulario.lastElementChild);
   }
 });
